@@ -1,0 +1,32 @@
+version: '3.4'
+services:
+
+ postgres:
+  image: postgres
+  volumes:
+   - postgres_data:/var/lib/postgresql/data
+  environment:
+   DB_DB: ${KEYCLOAK_DB_NAME}
+   DB_USER: ${KEYCLOAK_DB_USERNAME}
+   DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+
+ keycloak:
+  image: jboss/keycloak
+  environment:
+   DB_VENDOR: DB
+   DB_ADDR: postgres
+   DB_DATABASE: ${KEYCLOAK_DB_NAME}
+   DB_USER: ${KEYCLOAK_DB_USERNAME}
+   DB_SCHEMA: public
+   DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+   KEYCLOAK_USER: ${KEYCLOAK_USERNAME}
+   KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+  #JDBC_PARAMS: "ssl=true"
+  #ports:
+  # - 8080:8080
+  depends_on:
+    - postgres
+
+volumes:
+ postgres_data:
+  driver: local
