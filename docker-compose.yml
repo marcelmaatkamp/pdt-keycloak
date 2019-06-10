@@ -22,10 +22,8 @@ services:
    KEYCLOAK_USER: ${KEYCLOAK_USERNAME}
    KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
   #JDBC_PARAMS: "ssl=true"
-  #ports:
-  # - 8080:8080
   depends_on:
-    - postgres
+    - keycloak-postgres
 
 volumes:
  postgres_data:
